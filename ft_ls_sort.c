@@ -50,6 +50,21 @@ static t_dir_info	*ft_quick_sort(t_dir_info *head, t_dir_info *tail,
 	return (head_nd);
 }
 
+static	t_bool	ft_cmp_time(t_dir_info a, t_dir_info b)
+{
+	t_bool cmp;
+
+	if (a.m_time.tv_sec == b.m_time.tv_sec)
+	{
+		if (a.m_time.tv_nsec == b.m_time.tv_nsec)
+			cmp = ft_strcmp(a.name, b.name) < 0;
+		else
+			cmp = a.m_time.tv_nsec > b.m_time.tv_nsec;
+	}
+	else
+		cmp = a.m_time.tv_sec > b.m_time.tv_sec;
+	return (cmp);
+}
 
 static t_bool	ft_cmp_lex(t_dir_info a, t_dir_info b)
 {
@@ -68,12 +83,11 @@ void	ft_sort(t_node *flags, t_dir_info **parent_dir)
 	t_dir_info	*tail;
 	t_bool		(*cmp)(t_dir_info, t_dir_info);
 
-printf("test2----sort\n");
 	if (!(*parent_dir)->next)
 		return ;			//No need to sort IF only 1 dir.
 	tail = ft_set_tail(*parent_dir);
-	cmp = &ft_cmp_lex;
-//	cmp = flags->time ? &ft_cmptime : &ft_cmplex;
+//	cmp = &ft_cmp_lex;
+	cmp = flags->time ? &ft_cmp_time : &ft_cmp_lex;
 	*parent_dir = ft_quick_sort(*parent_dir, tail, cmp);
 	if (flags->rever)
 		ft_reverse_lst(parent_dir);

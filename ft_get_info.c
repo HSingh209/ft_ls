@@ -1,14 +1,5 @@
 #include "ft_ls_hd.h"
 
-void	ft_strdel(char **as)
-{
-	if (as)
-	{
-		free(*as);
-		*as = NULL;
-	}
-}
-
 static void		ft_set_link(char *path, char **link, size_t size)
 {
 	char	*linkname;
@@ -42,7 +33,7 @@ static char	ft_getdescriptor(mode_t m)
 	return ('0');
 }
 
-static char		*ft_parse_persmiss(mode_t st_mode)
+static char		*ft_parse_permiss(mode_t st_mode)
 {
 	char *permissions;
 
@@ -69,13 +60,16 @@ void	ft_get_d_info(t_dir_info *dir, t_node *flags, size_t *tot)
 		printf("post lstat\n");
 	dir->is_dir = S_ISDIR(dir_stats.st_mode) && !S_ISLNK(dir_stats.st_mode);
 	printf("test get d_info\n");
-	dir->permissions = ft_parse_persmiss(dir_stats.st_mode);
+	if (dir->err_nf != 1)
+	{
+	dir->permissions = ft_parse_permiss(dir_stats.st_mode);
 	dir->links = dir_stats.st_nlink;
 	dir->owner = getpwuid(dir_stats.st_uid)->pw_name;
 	dir->group = getgrgid(dir_stats.st_gid)->gr_name;
 	dir->size = dir_stats.st_size;
 	*tot += (size_t)dir_stats.st_blocks;
-	dir->mtime = dir_stats.st_mtimespec;
-	if (S_ISLNK(dir_stats.st_mode) && flags->l_spec)
-		ft_set_link(dir->path, &dir->name, (size_t)(dir_stats.st_size + 1));
+	dir->m_time = dir_stats.st_mtimespec;
+		if (S_ISLNK(dir_stats.st_mode) && flags->l_spec)
+			ft_set_link(dir->path, &dir->name, (size_t)(dir_stats.st_size + 1));
+	}
 }

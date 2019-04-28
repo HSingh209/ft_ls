@@ -1,5 +1,26 @@
 #include "ft_ls_hd.h"
 
+void	ft_free_dirs(t_dir_info **dirs)
+{
+	t_dir_info *curr;
+	t_dir_info *next;
+
+	curr = *dirs;
+	while (curr != NULL)
+	{
+		if (curr->children != NULL)
+			ft_free_dirs(&curr->children);
+		next = curr->next;
+		ft_strdel(&curr->name);
+		ft_strdel(&curr->path);
+		if (curr->is_dir != 0)
+			ft_strdel(&curr->permissions);
+		free(curr);
+		curr = next;
+	}
+	*dirs = NULL;
+}
+
 void	ft_move_left(t_dir_info **head, t_dir_info	**prev, t_dir_info **curr)
 {
 	if ((*head) == NULL)

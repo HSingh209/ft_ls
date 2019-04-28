@@ -1,22 +1,11 @@
 #include "ft_ls_hd.h"
-/*
-void	ft_print_long(t_dir_info *dir)
+
+void		ft_print_dir(t_dir_info *dir, int l_spec)
 {
-	char	*dir_time_stamp;
-
-	dir_time_stamp = ft_parse_dtime(dir->m_time);
-	printf("%s %d %s %s %d %s %s\n", dir->permissions, dir->links, dir->owner,
-							dir->group, dir->size, dir_time_stamp, dir->name);
-	ft_strdel(&dir_time_stamp);
-}*/
-
-
-void		ft_print_dir(t_dir_info *dir)//, t_bool l_spec)
-{
-//	if (l_spec)
-	//	ft_print_long(dir);
-//	else
-	if (dir->is_dir == 0 && dir->err_nf == 0)
+	printf("test print_dir\n");
+	if (l_spec)
+		ft_print_long(dir);
+	else if (dir->is_dir == 0 && dir->err_nf == 0)
 		ft_printf("%s\n", dir->name);
 	else if (dir->err_nf == 0)
 		ft_printf("%s\n", dir->path);
@@ -40,7 +29,7 @@ static void		ft_children_prt_l(t_dir_info *prt_nd)
 	ft_printf("total %zu\n", prt_nd->total);	//Make sure ft_printf can print '%zu'
 	while (child_seat)
 	{
-	//	ft_print_long(child_seat);		temporarily until I complete other parts of the code first
+		ft_print_long(child_seat);		//temporarily until I complete other parts of the code first
 		child_seat = child_seat->next;
 	}
 }
@@ -84,7 +73,7 @@ void	ft_print_lists(t_node *flags, t_dir_info *parent, t_bool is_root)
 		else if (is_root)
 		{
 			ft_printf("test\n");
-            ft_print_dir(parent);//, flags->l_spec);
+            ft_print_dir(parent, flags->l_spec);
 		}
 		parent = parent->next;
 	}

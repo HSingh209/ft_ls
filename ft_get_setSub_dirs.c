@@ -31,7 +31,7 @@ static t_dir_info	*ft_get_Cnodes(char *path_in, t_node *flags, size_t *tot,
 	chilnodes = NULL;
 	while ((curr_info = readdir(dirstream)))
 	{
-		if (*curr_info->d_name != '.')//flags->all))	//check for source code on how this is done (CHANGED)
+		if (*curr_info->d_name != '.' || flags->all)	//check for source code on how this is done (CHANGED)
 		{
 			name = ft_strdup(curr_info->d_name); //Why do i need 'strdup'
 			path = ft_make_npath(name, path_in);

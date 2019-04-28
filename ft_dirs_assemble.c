@@ -1,5 +1,6 @@
 #include "ft_ls_hd.h" //change later to be in "inc" folder!
 
+
 int 	ft_isdir(const char *path, t_dir_info *dir)
  {
  	struct stat file_inf;
@@ -19,6 +20,7 @@ int 	ft_isdir(const char *path, t_dir_info *dir)
 t_dir_info	*ft_new_chdir(char *name, char *path, t_node *flags, size_t *tot)
 {
 	t_dir_info	*dir;
+	int is_dir;
 
 	dir = (t_dir_info *)malloc(sizeof(t_dir_info));
 	dir->name = name;
@@ -27,8 +29,9 @@ t_dir_info	*ft_new_chdir(char *name, char *path, t_node *flags, size_t *tot)
 	dir->next = NULL;
 	dir->children = NULL;
 //	printf("pre get_d info\n");
-	if (ft_isdir(path, dir))
-		ft_get_d_info(dir, flags, tot);
+//	if (ft_isdir(path, dir))
+	is_dir = ft_isdir(path, dir);
+	ft_get_d_info(dir, flags, tot);
 	return (dir);
 }
 

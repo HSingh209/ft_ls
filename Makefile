@@ -4,7 +4,7 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror
 
-HEADER = fillit.h
+HEADER = ft_ls_hd.h
 
 CFILES = *.c
 

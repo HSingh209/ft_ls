@@ -1,16 +1,9 @@
 #include "ft_ls_hd.h"
 
-char	*ft_strchr(const char *s, int c)
+void	ft_free_flags(t_node **flags)
 {
-	while (*s)
-	{
-		if (*s == (char)c)
-			return ((char *)s);
-		s++;
-	}
-	if ((char)c == '\0')
-		return ((char *)s);
-	return (NULL);
+	free(*flags);
+	*flags = NULL;
 }
 
 static	t_bool 	ft_valid_flag(const char *args)
@@ -57,11 +50,9 @@ t_node	*ft_ls_flags(const char **av)
 	t_node *flags;
 
 	flags = ft_new_flg(); //same as calling "ft_newflags()" for flags
-	
 	i = 1;
 	while (av[i] && *(*(av + i) + 0) == '-')//This loop is to get all flags only
 	{
-	//	printf("test_ft_lsflag__\n");
 		if (ft_valid_flag(av[i]))
 		{
 			flags->rever = (ft_strchr(av[i], 'r') ? 1 : 0);
