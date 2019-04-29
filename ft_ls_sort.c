@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_ls_sort.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: harssing <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/28 16:57:47 by harssing          #+#    #+#             */
+/*   Updated: 2019/04/28 16:58:33 by harssing         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ls_hd.h"
 
 static t_dir_info	*ft_partition(t_dir_info *head, t_dir_info *tail, t_dir_info **head_nd,
@@ -19,11 +31,11 @@ static t_dir_info	*ft_partition(t_dir_info *head, t_dir_info *tail, t_dir_info *
 	}
 	if ((*head_nd) == NULL)
 		(*head_nd) = pivot_node;
-	(*tail_nd) = tail;		//check code here, error for type confliction fixed with * added to 'tail'
+	(*tail_nd) = tail;
 	return (pivot_node);
 }
 
-static t_dir_info	*ft_quick_sort(t_dir_info *head, t_dir_info *tail, 
+static t_dir_info	*ft_quick_sort(t_dir_info *head, t_dir_info *tail,
 							t_bool (*cmp)(t_dir_info, t_dir_info))
 {
 	t_dir_info *head_nd;
@@ -50,7 +62,7 @@ static t_dir_info	*ft_quick_sort(t_dir_info *head, t_dir_info *tail,
 	return (head_nd);
 }
 
-static	t_bool	ft_cmp_time(t_dir_info a, t_dir_info b)
+static	t_bool		ft_cmp_time(t_dir_info a, t_dir_info b)
 {
 	t_bool cmp;
 
@@ -66,27 +78,19 @@ static	t_bool	ft_cmp_time(t_dir_info a, t_dir_info b)
 	return (cmp);
 }
 
-static t_bool	ft_cmp_lex(t_dir_info a, t_dir_info b)
+static t_bool		ft_cmp_lex(t_dir_info a, t_dir_info b)
 {
 	return (ft_strcmp(a.name, b.name) < 0);
 }
 
-t_dir_info 		*ft_set_tail(t_dir_info *curr)
-{
-	while (curr && curr->next)
-		curr = curr->next;
-	return (curr);
-}
-//This function sorts the top nodes in order or in reverse if -r flag
-void	ft_sort(t_node *flags, t_dir_info **parent_dir)
+void				ft_sort(t_node *flags, t_dir_info **parent_dir)
 {
 	t_dir_info	*tail;
 	t_bool		(*cmp)(t_dir_info, t_dir_info);
 
 	if (!(*parent_dir)->next)
-		return ;			//No need to sort IF only 1 dir.
+		return ;
 	tail = ft_set_tail(*parent_dir);
-//	cmp = &ft_cmp_lex;
 	cmp = flags->time ? &ft_cmp_time : &ft_cmp_lex;
 	*parent_dir = ft_quick_sort(*parent_dir, tail, cmp);
 	if (flags->rever)

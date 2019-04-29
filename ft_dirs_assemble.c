@@ -1,13 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_dirs_assemble.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: harssing <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/28 17:37:27 by harssing          #+#    #+#             */
+/*   Updated: 2019/04/28 17:44:13 by harssing         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ls_hd.h" //change later to be in "inc" folder!
 
-
-int 	ft_isdir(const char *path, t_dir_info *dir)
- {
- 	struct stat file_inf;
+int			ft_isdir(const char *path, t_dir_info *dir)
+{
+	struct stat file_inf;
 
 	if (lstat(path, &file_inf) != 0)
 	{
-		printf("ls: %s: No such file or directory\n", path);//error (stat will return -1) due to no file found called *path)
+		printf("ls: %s: No such file or directory\n", path);
 		dir->err_nf = 1;
 		return (0);
 	}
@@ -16,11 +27,10 @@ int 	ft_isdir(const char *path, t_dir_info *dir)
 	return (S_ISDIR(file_inf.st_mode) && !S_ISLNK(file_inf.st_mode));
 }
 
-
 t_dir_info	*ft_new_chdir(char *name, char *path, t_node *flags, size_t *tot)
 {
 	t_dir_info	*dir;
-	int is_dir;
+	int			is_dir;
 
 	dir = (t_dir_info *)malloc(sizeof(t_dir_info));
 	dir->name = name;
@@ -28,24 +38,22 @@ t_dir_info	*ft_new_chdir(char *name, char *path, t_node *flags, size_t *tot)
 	dir->total = 0;
 	dir->next = NULL;
 	dir->children = NULL;
-//	printf("pre get_d info\n");
-//	if (ft_isdir(path, dir))
 	is_dir = ft_isdir(path, dir);
 	ft_get_d_info(dir, flags, tot);
 	return (dir);
 }
 
-void	ft_push(t_dir_info **curr, t_dir_info *new)
+void		ft_push(t_dir_info **curr, t_dir_info *new)
 {
 	new->next = *curr;
 	*curr = new;
 }
 
-char	*ft_setPath_fs(char *name, char *path)
+char		*ft_setpath_fs(char *name, char *path)
 {
 	char	*tmp;
 	char	*result;
-	int 	len;
+	int		len;
 
 	if (name[0] == '/')
 		return (ft_strdup(name));

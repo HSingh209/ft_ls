@@ -59,14 +59,6 @@ int				ft_uitoa_base(uintmax_t val, int base, char x);
 void			ft_padding_ou(int n_len, t_wd_flg *fl);
 void			ft_print_percent(char c, t_wd_flg *fl);
 void			ft_print_floats(char c, t_wd_flg *fl, va_list typ);
-// char			*ft_itoa(int n);
 char			*ft_ldtoa(double n, int precision);
-// char			*ft_strdup(const char *s1);
-// int				ft_isdigit(int a);
-// int				ft_atoi(const char *str);
-// void			*ft_memalloc(size_t size);
-// char			*ft_strchr(const char *s, int c);
-// void			ft_bzero(void *s, size_t n);
-// int				ft_strlen(const char *s);
 
 #endif

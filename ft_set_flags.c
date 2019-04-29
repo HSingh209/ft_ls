@@ -1,16 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_set_flags.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: harssing <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/28 18:02:47 by harssing          #+#    #+#             */
+/*   Updated: 2019/04/28 18:06:43 by harssing         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ls_hd.h"
 
-void	ft_free_flags(t_node **flags)
+void			ft_free_flags(t_node **flags)
 {
 	free(*flags);
 	*flags = NULL;
 }
 
-static	t_bool 	ft_valid_flag(const char *args)
+static	t_bool	ft_valid_flag(const char *args)
 {
 	int i;
-
-		printf("test_ft_valid_flag__\n");
 
 	i = 0;
 	if (args[i] != '-')
@@ -18,7 +28,7 @@ static	t_bool 	ft_valid_flag(const char *args)
 	i++;
 	while (args[i])
 	{
-		if (args[i] == 'R' || args[i] == 'a' || args[i] == 't' || 
+		if (args[i] == 'R' || args[i] == 'a' || args[i] == 't' ||
 			args[i] == 'r' || args[i] == 'l')
 			i++;
 		else
@@ -44,14 +54,14 @@ static t_node	*ft_new_flg(void)
 	return (new);
 }
 
-t_node	*ft_ls_flags(const char **av)
+t_node			*ft_ls_flags(const char **av)
 {
 	size_t i;
 	t_node *flags;
 
-	flags = ft_new_flg(); //same as calling "ft_newflags()" for flags
+	flags = ft_new_flg();
 	i = 1;
-	while (av[i] && *(*(av + i) + 0) == '-')//This loop is to get all flags only
+	while (av[i] && *(*(av + i) + 0) == '-')
 	{
 		if (ft_valid_flag(av[i]))
 		{

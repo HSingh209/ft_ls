@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_get_info.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: harssing <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/28 17:44:40 by harssing          #+#    #+#             */
+/*   Updated: 2019/04/28 17:47:35 by harssing         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ls_hd.h"
 
 static void		ft_set_link(char *path, char **link, size_t size)
@@ -14,7 +26,7 @@ static void		ft_set_link(char *path, char **link, size_t size)
 	*link = linkname;
 }
 
-static char	ft_getdescriptor(mode_t m)
+static char		ft_getdescriptor(mode_t m)
 {
 	if ((m & S_IFMT) == S_IFREG)
 		return ('-');
@@ -52,9 +64,9 @@ static char		*ft_parse_permiss(mode_t st_mode)
 	return (permissions);
 }
 
-void	ft_get_d_info(t_dir_info *dir, t_node *flags, size_t *tot)
+void			ft_get_d_info(t_dir_info *dir, t_node *flags, size_t *tot)
 {
-	struct stat 	dir_stats;
+	struct stat	dir_stats;
 
 	lstat(dir->path, &dir_stats);
 		printf("post lstat\n");
@@ -62,13 +74,13 @@ void	ft_get_d_info(t_dir_info *dir, t_node *flags, size_t *tot)
 	printf("test get d_info\n");
 	if (dir->err_nf != 1)
 	{
-	dir->permissions = ft_parse_permiss(dir_stats.st_mode);
-	dir->links = dir_stats.st_nlink;
-	dir->owner = getpwuid(dir_stats.st_uid)->pw_name;
-	dir->group = getgrgid(dir_stats.st_gid)->gr_name;
-	dir->size = dir_stats.st_size;
-	*tot += (size_t)dir_stats.st_blocks;
-	dir->m_time = dir_stats.st_mtimespec;
+		dir->permissions = ft_parse_permiss(dir_stats.st_mode);
+		dir->links = dir_stats.st_nlink;
+		dir->owner = getpwuid(dir_stats.st_uid)->pw_name;
+		dir->group = getgrgid(dir_stats.st_gid)->gr_name;
+		dir->size = dir_stats.st_size;
+		*tot += (size_t)dir_stats.st_blocks;
+		dir->m_time = dir_stats.st_mtimespec;
 		if (S_ISLNK(dir_stats.st_mode) && flags->l_spec)
 			ft_set_link(dir->path, &dir->name, (size_t)(dir_stats.st_size + 1));
 	}

@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_qsort_helpers.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: harssing <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/28 17:59:29 by harssing          #+#    #+#             */
+/*   Updated: 2019/04/28 18:02:08 by harssing         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ls_hd.h"
 
-void	ft_free_dirs(t_dir_info **dirs)
+void		ft_free_dirs(t_dir_info **dirs)
 {
 	t_dir_info *curr;
 	t_dir_info *next;
@@ -21,7 +33,8 @@ void	ft_free_dirs(t_dir_info **dirs)
 	*dirs = NULL;
 }
 
-void	ft_move_left(t_dir_info **head, t_dir_info	**prev, t_dir_info **curr)
+void		ft_move_left(t_dir_info **head, t_dir_info **prev,
+		t_dir_info **curr)
 {
 	if ((*head) == NULL)
 		(*head) = *curr;
@@ -29,7 +42,8 @@ void	ft_move_left(t_dir_info **head, t_dir_info	**prev, t_dir_info **curr)
 	*curr = (*curr)->next;
 }
 
-void	ft_move_right(t_dir_info **tail, t_dir_info **prev, t_dir_info **curr)
+void		ft_move_right(t_dir_info **tail, t_dir_info **prev,
+		t_dir_info **curr)
 {
 	t_dir_info	*temp;
 
@@ -42,7 +56,7 @@ void	ft_move_right(t_dir_info **tail, t_dir_info **prev, t_dir_info **curr)
 	(*curr) = temp;
 }
 
-void	ft_reverse_lst(t_dir_info **dir)
+void		ft_reverse_lst(t_dir_info **dir)
 {
 	t_dir_info *current;
 	t_dir_info *prev;
@@ -61,7 +75,7 @@ void	ft_reverse_lst(t_dir_info **dir)
 	*dir = prev;
 }
 
-t_dir_info	*ft_get_tail(t_dir_info	*current)
+t_dir_info	*ft_get_tail(t_dir_info *current)
 {
 	while (current && current->next)
 		current = current->next;
