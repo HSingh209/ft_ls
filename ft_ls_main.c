@@ -52,7 +52,6 @@ static void		ft_sort_sub_dirs(t_node *flags, t_dir_info *parent_dirs)
 static void		ft_ls(t_node *flags, t_dir_info *parent_dir)
 {
 	ft_get_each_family(flags, parent_dir);
-		ft_printf("test_get_eachFam passed\n");//delete comments and change all printf to ft_printf
 	ft_sort_sub_dirs(flags, parent_dir);
 	ft_print_lists(flags, parent_dir, true);
 }
@@ -94,7 +93,6 @@ int				main(int ac, const char **av)
 	{
 		flags = ft_ls_flags(av);
 		dir_list = ft_make_nodes((char**)av, flags);
-		ft_printf("is dir? === %i\n", dir_list->is_dir);//Dont forget to check all printfs are ft_printf & comments
 		ft_sort(flags, &dir_list);
 		ft_ls(flags, dir_list);
 		ft_free_flags(&flags);

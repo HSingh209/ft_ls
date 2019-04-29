@@ -12,8 +12,29 @@
 
 #include "ft_ls_hd.h"
 
-static t_dir_info	*ft_partition(t_dir_info *head, t_dir_info *tail, t_dir_info **head_nd,
-							t_dir_info **tail_nd, t_bool (*cmp)(t_dir_info, t_dir_info))
+static	t_bool		ft_cmp_time(t_dir_info a, t_dir_info b)
+{
+	t_bool cmp;
+
+	if (a.m_time.tv_sec == b.m_time.tv_sec)
+	{
+		if (a.m_time.tv_nsec == b.m_time.tv_nsec)
+			cmp = ft_strcmp(a.name, b.name) < 0;
+		else
+			cmp = a.m_time.tv_nsec > b.m_time.tv_nsec;
+	}
+	else
+		cmp = a.m_time.tv_sec > b.m_time.tv_sec;
+	return (cmp);
+}
+
+static t_bool		ft_cmp_lex(t_dir_info a, t_dir_info b)
+{
+	return (ft_strcmp(a.name, b.name) < 0);
+}
+
+static t_dir_info	*ft_partition(t_dir_info *head, t_dir_info *tail, t_dir_info
+	**head_nd, t_dir_info **tail_nd, t_bool (*cmp)(t_dir_info, t_dir_info))
 {
 	t_dir_info	*pivot_node;
 	t_dir_info	*prev_dir;
@@ -60,27 +81,6 @@ static t_dir_info	*ft_quick_sort(t_dir_info *head, t_dir_info *tail,
 	}
 	pivot->next = ft_quick_sort(pivot->next, tail_nd, (*cmp));
 	return (head_nd);
-}
-
-static	t_bool		ft_cmp_time(t_dir_info a, t_dir_info b)
-{
-	t_bool cmp;
-
-	if (a.m_time.tv_sec == b.m_time.tv_sec)
-	{
-		if (a.m_time.tv_nsec == b.m_time.tv_nsec)
-			cmp = ft_strcmp(a.name, b.name) < 0;
-		else
-			cmp = a.m_time.tv_nsec > b.m_time.tv_nsec;
-	}
-	else
-		cmp = a.m_time.tv_sec > b.m_time.tv_sec;
-	return (cmp);
-}
-
-static t_bool		ft_cmp_lex(t_dir_info a, t_dir_info b)
-{
-	return (ft_strcmp(a.name, b.name) < 0);
 }
 
 void				ft_sort(t_node *flags, t_dir_info **parent_dir)

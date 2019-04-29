@@ -69,9 +69,7 @@ void			ft_get_d_info(t_dir_info *dir, t_node *flags, size_t *tot)
 	struct stat	dir_stats;
 
 	lstat(dir->path, &dir_stats);
-		printf("post lstat\n");
 	dir->is_dir = S_ISDIR(dir_stats.st_mode) && !S_ISLNK(dir_stats.st_mode);
-	printf("test get d_info\n");
 	if (dir->err_nf != 1)
 	{
 		dir->permissions = ft_parse_permiss(dir_stats.st_mode);

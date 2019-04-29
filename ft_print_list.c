@@ -12,9 +12,8 @@
 
 #include "ft_ls_hd.h"
 
-void		ft_print_dir(t_dir_info *dir, int l_spec)
+void			ft_print_dir(t_dir_info *dir, int l_spec)
 {
-	printf("test print_dir\n");
 	if (l_spec)
 		ft_print_long(dir);
 	else if (dir->is_dir == 0 && dir->err_nf == 0)
@@ -25,7 +24,7 @@ void		ft_print_dir(t_dir_info *dir, int l_spec)
 		write(1, "\n", 2);
 }
 
-void		ft_header_ls(t_dir_info *dir, t_bool is_root)
+void			ft_header_ls(t_dir_info *dir, t_bool is_root)
 {
 	if (is_root)
 		ft_printf("%s:\n", dir->name);
@@ -38,7 +37,7 @@ static void		ft_children_prt_l(t_dir_info *prt_nd)
 	t_dir_info	*child_seat;
 
 	child_seat = prt_nd->children;
-	ft_printf("total %zu\n", prt_nd->total);	//Make sure ft_printf can print '%zu'
+	ft_printf("total %zu\n", prt_nd->total);
 	while (child_seat)
 	{
 		ft_print_long(child_seat);
@@ -56,16 +55,16 @@ static	void	ft_print_childs(t_dir_info *children)
 	write(1, "\n", 1);
 }
 
-void	ft_print_lists(t_node *flags, t_dir_info *parent, t_bool is_root)
+void			ft_print_lists(t_node *flags, t_dir_info *parent,
+				t_bool is_root)
 {
 	t_bool	multi;
 
 	multi = parent->next ? true : false;
 	while (parent)
 	{
-		if (parent->is_dir && ft_strcmp(".", parent->name) && ft_strcmp("..", parent->name))
+		if (parent->is_dir)
 		{
-			ft_printf("testING\n");
 			if (!is_root || multi)
 				ft_header_ls(parent, is_root);
 			if (flags->l_spec && parent->children != NULL)
@@ -79,10 +78,7 @@ void	ft_print_lists(t_node *flags, t_dir_info *parent, t_bool is_root)
 			}
 		}
 		else if (is_root)
-		{
-			ft_printf("test\n");
 			ft_print_dir(parent, flags->l_spec);
-		}
 		parent = parent->next;
 	}
 }

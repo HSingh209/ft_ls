@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls_hd.h" //change later to be in "inc" folder!
+#include "ft_ls_hd.h"
 
 int			ft_isdir(const char *path, t_dir_info *dir)
 {

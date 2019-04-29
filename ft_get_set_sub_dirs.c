@@ -19,7 +19,7 @@ char				*ft_make_npath(char *name, char *path)
 	int		len;
 
 	if (name[0] == '/')
-		return (name);	//use ft_strdup here ?
+		return (name);
 	len = ft_strlen(path);
 	if (path[len - 1] != '/')
 	{
@@ -45,7 +45,7 @@ static t_dir_info	*ft_get_ch_nodes(char *path_in, t_node *flags, size_t *tot,
 	{
 		if (*curr_info->d_name != '.' || flags->all)
 		{
-			name = ft_strdup(curr_info->d_name); //Why do i need 'strdup'
+			name = ft_strdup(curr_info->d_name);
 			path = ft_make_npath(name, path_in);
 			if (chilnodes != NULL)
 				ft_push(&chilnodes, ft_new_chdir(name, path, flags, tot));
@@ -60,7 +60,7 @@ static t_dir_info	*ft_get_ch_nodes(char *path_in, t_node *flags, size_t *tot,
 	return (chilnodes);
 }
 
-t_dir_info			*ft_set_child_nodes(char *path, t_node *flags, size_t *tot)	//changing tot to int from size_t [WED 4 PM]
+t_dir_info			*ft_set_child_nodes(char *path, t_node *flags, size_t *tot)
 {
 	DIR			*dirstream;
 	t_dir_info	*fam;
