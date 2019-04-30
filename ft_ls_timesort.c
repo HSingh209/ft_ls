@@ -1,39 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ls_sort.c                                       :+:      :+:    :+:   */
+/*   ft_ls_timesort.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: harssing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/28 16:57:47 by harssing          #+#    #+#             */
-/*   Updated: 2019/04/28 16:58:33 by harssing         ###   ########.fr       */
+/*   Created: 2019/04/29 16:48:09 by harssing          #+#    #+#             */
+/*   Updated: 2019/04/29 16:58:36 by harssing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls_hd.h"
 
-t_bool				ft_cmp_time(t_dir_info a, t_dir_info b)
-{
-	t_bool cmp;
-
-	if (a.m_time.tv_sec == b.m_time.tv_sec)
-	{
-		if (a.m_time.tv_nsec == b.m_time.tv_nsec)
-			cmp = ft_strcmp(a.name, b.name) < 0;
-		else
-			cmp = a.m_time.tv_nsec > b.m_time.tv_nsec;
-	}
-	else
-		cmp = a.m_time.tv_sec > b.m_time.tv_sec;
-	return (cmp);
-}
-
-static t_bool		ft_cmp_lex(t_dir_info a, t_dir_info b)
-{
-	return (ft_strcmp(a.name, b.name) < 0);
-}
-
-static t_dir_info	*ft_partition(t_dir_info *head, t_dir_info *tail,
+static t_dir_info	*ft_partition_t(t_dir_info *head, t_dir_info *tail,
 t_dir_info **head_nd, t_dir_info **tail_nd)
 {
 	t_dir_info	*pivot_node;
@@ -45,7 +24,7 @@ t_dir_info **head_nd, t_dir_info **tail_nd)
 	curr_dir = head;
 	while (curr_dir != pivot_node)
 	{
-		if (ft_cmp_lex(*curr_dir, *pivot_node))
+		if (ft_cmp_time(*curr_dir, *pivot_node))
 			ft_move_left(head_nd, &prev_dir, &curr_dir);
 		else
 			ft_move_right(&tail, &prev_dir, &curr_dir);
@@ -56,7 +35,7 @@ t_dir_info **head_nd, t_dir_info **tail_nd)
 	return (pivot_node);
 }
 
-static t_dir_info	*ft_quick_sort(t_dir_info *head, t_dir_info *tail)
+t_dir_info			*ft_quick_sort_t(t_dir_info *head, t_dir_info *tail)
 {
 	t_dir_info *head_nd;
 	t_dir_info *tail_nd;
@@ -67,32 +46,17 @@ static t_dir_info	*ft_quick_sort(t_dir_info *head, t_dir_info *tail)
 		return (head);
 	head_nd = NULL;
 	tail_nd = NULL;
-	pivot = ft_partition(head, tail, &head_nd, &tail_nd);
+	pivot = ft_partition_t(head, tail, &head_nd, &tail_nd);
 	if (head_nd != pivot)
 	{
 		temp = head_nd;
 		while (temp->next != pivot)
 			temp = temp->next;
 		temp->next = NULL;
-		head_nd = ft_quick_sort(head_nd, temp);
+		head_nd = ft_quick_sort_t(head_nd, temp);
 		temp = ft_get_tail(head_nd);
 		temp->next = pivot;
 	}
-	pivot->next = ft_quick_sort(pivot->next, tail_nd);
+	pivot->next = ft_quick_sort_t(pivot->next, tail_nd);
 	return (head_nd);
-}
-
-void				ft_sort(t_node *flags, t_dir_info **parent_dir)
-{
-	t_dir_info	*tail;
-	t_bool		(*cmp)(t_dir_info, t_dir_info);
-
-	if (!(*parent_dir)->next)
-		return ;
-	tail = ft_set_tail(*parent_dir);
-	cmp = flags->time ? &ft_cmp_time : &ft_cmp_lex;
-	*parent_dir = flags->time ? ft_quick_sort_t(*parent_dir, tail) :
-		ft_quick_sort(*parent_dir, tail);
-	if (flags->rever)
-		ft_reverse_lst(parent_dir);
 }

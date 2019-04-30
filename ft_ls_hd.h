@@ -6,7 +6,7 @@
 /*   By: harssing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/28 15:32:24 by harssing          #+#    #+#             */
-/*   Updated: 2019/04/28 15:55:14 by harssing         ###   ########.fr       */
+/*   Updated: 2019/04/29 17:03:46 by harssing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct			s_dir_info
 	char				*path;
 	struct s_dir_info	*next;
 	struct s_dir_info	*children;
-
+	t_bool				(*cmp)(struct s_dir_info, struct s_dir_info);
 }						t_dir_info;
 
 void					ft_push(t_dir_info **curr, t_dir_info *new);
@@ -88,6 +88,8 @@ t_dir_info				*ft_new_chdir(char *name, char *path, t_node *flags,
 void					ft_sort(t_node *flags, t_dir_info **parent_dir);
 void					ft_print_lists(t_node *flags, t_dir_info *parent,
 						t_bool is_root);
+t_dir_info				*ft_quick_sort_t(t_dir_info *head, t_dir_info *tail);
+t_bool					ft_cmp_time(t_dir_info a, t_dir_info b);
 t_node					*ft_ls_flags(const char **av);
 
 #endif

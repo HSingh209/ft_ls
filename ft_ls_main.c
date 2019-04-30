@@ -6,7 +6,7 @@
 /*   By: harssing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/28 16:19:30 by harssing          #+#    #+#             */
-/*   Updated: 2019/04/28 16:36:27 by harssing         ###   ########.fr       */
+/*   Updated: 2019/04/29 17:04:23 by harssing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ t_dir_info		*ft_make_nodes(char **av, t_node *flags)
 	size_t		temp;
 
 	i = 1;
-	ll = NULL;
 	while (av[i] && *(*(av + i) + 0) == '-')
 		i++;
 	if (av[i])
